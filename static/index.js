@@ -6,15 +6,30 @@ let langColors = {
   pt: 'orange'
 }
 
+const debounce = function(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
+
 let input = document.getElementById('text')
-input.addEventListener('input', e => {
+input.addEventListener('input', debounce((e => {
   let data = new FormData
   let sentence = e.target.value
   data.append('sentence', sentence)
   fetch('/classify', {method: 'POST', body: data}).then(res => res.json()).then(ret => {
     renderLangs(sentence, ret)
   })
-})
+}), 500))
 
 function renderLangs(sentence, data) {
   let charwiseEstimates = []
