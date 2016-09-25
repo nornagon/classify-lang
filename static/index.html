@@ -10,8 +10,8 @@ body {
   </head>
   <body>
     <h1>classify lang</h1>
-    Text: <input id='text' />
-    <div id='output'></div>
+    Text: <input id='text' style="width: 80%" value="This is a sentence which contains multiple languages: ésta se encuentra en español, and este é em português." />
+    <div id='output'>Loading...</div>
     <p>
     <div style="color: blue">English</div>
     <div style="color: green">Spanish</div>
@@ -26,15 +26,18 @@ body {
     sample.
     </p>
     <p>
-    I know almost nothing about machine learning, so <a
-      href="https://keras.io">Keras</a> was invaluable to me in building this
-    thing. I'd like to expand it to cover more languages (perhaps using the <a
+    I know almost nothing about machine learning (this is the first non-MNIST
+      thing I've built), so mega kudos to <a
+      href="https://keras.io">Keras</a> for being extraordinarily approachable
+    and easy to use. I'd like to expand the model to cover more languages
+    (perhaps using the <a
       href="https://dumps.wikimedia.org/backup-index.html">Wikipedia dumps</a>
     or some of <a
       href="http://linguatools.org/tools/corpora/wikipedia-monolingual-corpora/">
       These Wikipedia-derived corpora</a>. I expect that significantly
     expanding the number of detectable languages will require a corresponding
-    significant increase in compute power though.
+    significant increase in compute power, though.
+    </p>
     <p>
     Made by <a href="http://nornagon.net">Jeremy Apthorp</a>.
     </p>

@@ -21,15 +21,19 @@ const debounce = function(func, wait, immediate) {
 	};
 };
 
-let input = document.getElementById('text')
-input.addEventListener('input', debounce((e => {
+const input = document.getElementById('text')
+const output = document.getElementById('output')
+
+const classify = sentence => {
   let data = new FormData
-  let sentence = e.target.value
   data.append('sentence', sentence)
   fetch('/classify', {method: 'POST', body: data}).then(res => res.json()).then(ret => {
     renderLangs(sentence, ret)
   })
-}), 500))
+}
+
+input.addEventListener('input', debounce((e => classify(e.target.value)), 500))
+classify(input.value)
 
 function renderLangs(sentence, data) {
   let charwiseEstimates = []
@@ -48,7 +52,6 @@ function renderLangs(sentence, data) {
     }
   }
 
-  let output = document.getElementById('output')
   output.innerHTML = ''
   for (let i = 0; i < sentence.length; i++) {
     let letter = document.createElement('span')
