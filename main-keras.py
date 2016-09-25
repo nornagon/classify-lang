@@ -11,26 +11,24 @@ from keras.optimizers import RMSprop
 #max_features = 20000
 maxlen = 32
 batch_size = 128
-nlangs = 2
+langs = ["en", "es", "pt"]
+nlangs = len(langs)
+
 
 def load_data(maxsize=None):
-    with open("en.10000.shuffled.train", "rb") as f:
-        x_en_train = [x for x in f.readlines()][:maxsize]
-        y_en_train = [0 for _ in range(len(x_en_train))]
-    with open("es.10000.shuffled.train", "rb") as f:
-        x_es_train = [x for x in f.readlines()][:maxsize]
-        y_es_train = [1 for _ in range(len(x_es_train))]
-    with open("en.10000.shuffled.test", "rb") as f:
-        x_en_test = [x for x in f.readlines()][:maxsize]
-        y_en_test = [0 for _ in range(len(x_en_test))]
-    with open("es.10000.shuffled.test", "rb") as f:
-        x_es_test = [x for x in f.readlines()][:maxsize]
-        y_es_test = [1 for _ in range(len(x_es_test))]
-
-    x_train = x_en_train + x_es_train
-    y_train = y_en_train + y_es_train
-    x_test = x_en_test + x_es_test
-    y_test = y_en_test + y_es_test
+    x_train = []
+    y_train = []
+    x_test = []
+    y_test = []
+    for i, lang in enumerate(langs):
+        with open("%s.1000.shuffled.train" % lang, "rb") as f:
+            lines = [x for x in f.readlines()][:maxsize]
+            x_train += lines
+            y_train += [i for _ in range(len(lines))]
+        with open("%s.1000.shuffled.test" % lang, "rb") as f:
+            lines = [x for x in f.readlines()][:maxsize]
+            x_test += lines
+            y_test += [i for _ in range(len(lines))]
 
     x_train_sliced = []
     y_train_sliced = []
@@ -49,7 +47,7 @@ def load_data(maxsize=None):
     return (x_train_sliced, y_train_sliced), (x_test_sliced, y_test_sliced)
 
 print('Loading data...')
-(X_train, y_train), (X_test, y_test) = load_data(1000)
+(X_train, y_train), (X_test, y_test) = load_data()
 print(len(X_train), 'train sequences')
 print(len(X_test), 'test sequences')
 
