@@ -1,10 +1,16 @@
 <!doctype html>
 <html>
   <head>
+<style>
+body {
+  max-width: 800px;
+  margin: auto;
+}
+</style>
   </head>
   <body>
     <h1>classify lang</h1>
-    <input id='text' />
+    Text: <input id='text' />
     <div id='output'></div>
     <p>
     <div style="color: blue">English</div>
@@ -12,5 +18,25 @@
     <div style="color: orange">Portuguese</div>
     </p>
     <script src="/static/index.js"></script>
+    <p>
+    The above uses a recurrent neural network trained on (a subset of) the <a
+      href="http://www.statmt.org/europarl/">Europarl</a> corpus to detect the
+    language in which the source text is written. It uses a rolling 32-byte
+    window over the text, so multiple languages may be detected within a given
+    sample.
+    </p>
+    <p>
+    I know almost nothing about machine learning, so <a
+      href="https://keras.io">Keras</a> was invaluable to me in building this
+    thing. I'd like to expand it to cover more languages (perhaps using the <a
+      href="https://dumps.wikimedia.org/backup-index.html">Wikipedia dumps</a>
+    or some of <a
+      href="http://linguatools.org/tools/corpora/wikipedia-monolingual-corpora/">
+      These Wikipedia-derived corpora</a>. I expect that significantly
+    expanding the number of detectable languages will require a corresponding
+    significant increase in compute power though.
+    <p>
+    Made by <a href="http://nornagon.net">Jeremy Apthorp</a>.
+    </p>
   </body>
 </html>
